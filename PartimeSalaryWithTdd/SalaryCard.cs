@@ -42,7 +42,16 @@ namespace PartimeSalaryWithTdd
 		private double GetOverTimePay(double workingHour)
 		{
 			var overTimeHour = workingHour - normalWorkingHourLimit;
-			var overTimePay = overTimeHour * this.FirstOverTimeRatio * this.HourlySalary;
+
+			// separate two phase of overtime hour
+			var firstOverTime = overTimeHour <= 2 ? overTimeHour : 2;
+			var secondOverTime = overTimeHour > 2 ? overTimeHour - firstOverTime : 0;
+
+			//var overTimePay = overTimeHour * this.FirstOverTimeRatio * this.HourlySalary;
+			var firstOverTimePay = firstOverTime * this.FirstOverTimeRatio * this.HourlySalary;
+			var secondOverTimePay = secondOverTime * this.SecondOverTimeRatio * this.HourlySalary;
+
+			var overTimePay = firstOverTimePay + secondOverTimePay;
 			return overTimePay;
 		}
 
