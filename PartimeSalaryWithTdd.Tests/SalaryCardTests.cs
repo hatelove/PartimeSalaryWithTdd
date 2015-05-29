@@ -70,6 +70,18 @@ namespace PartimeSalaryWithTdd.Tests
             //And 下班時間為 "2014/8/30 17:00:00"
             //When 呼叫CalculateSalary方法
             //Then 薪資計算結果應為 800
+
+			var target = new SalaryCard();
+			target.HourlySalary = 100;
+			target.StartTime = new DateTime(2014, 8, 30, 8, 0, 0);
+			target.EndTime = new DateTime(2014, 8, 30, 17, 0, 0);
+
+			//act
+			var actual = target.CalculateSalary();
+
+			//assert
+			var expected = 800;
+			Assert.AreEqual(expected, actual);
           
         }
 
