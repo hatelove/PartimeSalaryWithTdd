@@ -31,13 +31,19 @@ namespace PartimeSalaryWithTdd
 			{
 				var normalPay = normalWorkingHourLimit * this.HourlySalary;
 
-				var overTimeHour = workingHour - normalWorkingHourLimit;				
-				var overTimePay = overTimeHour * this.FirstOverTimeRatio * this.HourlySalary;
+				var overTimePay = GetOverTimePay(workingHour);
 
 				var result = normalPay + overTimePay;
 
 				return result;
 			}
+		}
+
+		private double GetOverTimePay(double workingHour)
+		{
+			var overTimeHour = workingHour - normalWorkingHourLimit;
+			var overTimePay = overTimeHour * this.FirstOverTimeRatio * this.HourlySalary;
+			return overTimePay;
 		}
 
 		private double GetWorkingHour()
@@ -54,5 +60,7 @@ namespace PartimeSalaryWithTdd
 		}
 
 		public double FirstOverTimeRatio { get; set; }
+
+		public int SecondOverTimeRatio { get; set; }
 	}
 }
