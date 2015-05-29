@@ -8,6 +8,8 @@ namespace PartimeSalaryWithTdd
 {
 	public class SalaryCard
 	{
+		private double normalWorkingHourLimit = 8;
+
 		public int HourlySalary { get; set; }
 
 		public DateTime StartTime { get; set; }
@@ -17,9 +19,25 @@ namespace PartimeSalaryWithTdd
 		public double CalculateSalary()
 		{
 			var workingHour = this.GetWorkingHour();
-			var result = workingHour * this.HourlySalary;
 
-			return result;
+
+			if (workingHour <= normalWorkingHourLimit)
+			{
+				var result = workingHour * this.HourlySalary;
+
+				return result;
+			}
+			else
+			{
+				var normalPay = normalWorkingHourLimit * this.HourlySalary;
+
+				var overTimeHour = workingHour - normalWorkingHourLimit;				
+				var overTimePay = overTimeHour * this.FirstOverTimeRatio * this.HourlySalary;
+
+				var result = normalPay + overTimePay;
+
+				return result;
+			}
 		}
 
 		private double GetWorkingHour()
@@ -34,5 +52,7 @@ namespace PartimeSalaryWithTdd
 
 			return workingHour;
 		}
+
+		public double FirstOverTimeRatio { get; set; }
 	}
 }
