@@ -46,8 +46,7 @@ namespace PartimeSalaryWithTdd
 			// separate two phase of overtime hour
 			var firstOverTime = overTimeHour <= 2 ? overTimeHour : 2;
 			var secondOverTime = overTimeHour > 2 ? overTimeHour - firstOverTime : 0;
-
-			//var overTimePay = overTimeHour * this.FirstOverTimeRatio * this.HourlySalary;
+			
 			var firstOverTimePay = firstOverTime * this.FirstOverTimeRatio * this.HourlySalary;
 			var secondOverTimePay = secondOverTime * this.SecondOverTimeRatio * this.HourlySalary;
 
@@ -58,7 +57,10 @@ namespace PartimeSalaryWithTdd
 		private double GetOverTimeHours(double workingHour)
 		{
 			var overTimeHour = workingHour - normalWorkingHourLimit;
-			return overTimeHour;
+
+			// 加班最多只能報4hr
+			var result = overTimeHour > 4 ? 4 : overTimeHour;
+			return result;
 		}
 
 		private double GetWorkingHour()
