@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PartimeSalaryWithTdd.Utility;
 
 namespace PartimeSalaryWithTdd
 {
@@ -13,7 +14,7 @@ namespace PartimeSalaryWithTdd
 
 		public DateTime EndTime { get; set; }
 
-		public int CalculateSalary()
+		public double CalculateSalary()
 		{
 			var workingHour = this.GetWorkingHour();
 			var result = workingHour * this.HourlySalary;
@@ -23,7 +24,15 @@ namespace PartimeSalaryWithTdd
 
 		private double GetWorkingHour()
 		{
-			throw new NotImplementedException();
+			var moringEnd = new DateTime(this.StartTime.Year, this.StartTime.Month, this.StartTime.Day, 12, 0, 0);
+			var afternoonStart = new DateTime(this.StartTime.Year, this.StartTime.Month, this.StartTime.Day, 13, 0, 0);
+
+			var morningWorkhour = DateTimeHelper.TotalHours(this.StartTime, moringEnd);
+			var afternoonWorkhour = DateTimeHelper.TotalHours(afternoonStart, this.EndTime);
+
+			var workingHour = morningWorkhour + afternoonWorkhour;
+
+			return workingHour;
 		}
 	}
 }
